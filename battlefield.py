@@ -1,12 +1,16 @@
+from random import randint
 from fleet import Fleet
 from herd import Herd
+
 class Battlefield:
     def __init__(self):
         self.fleet_on_battlefield = Fleet()
         self.herd_on_battlefield = Herd()
 
     def run_game(self):
-        pass
+        Fleet.create_fleet()
+        Herd.create_herd()
+        coin_toss = randint(0,2)
 
     def display_welcome(self):
         pass
@@ -20,10 +24,10 @@ class Battlefield:
     def robo_turn(self):
         pass
 
-    def show_dino_opponent_options(self):
+    def show_dino_attack_options(self):
         pass
 
-    def show_robo_opponent_options(self):
+    def show_robo_attack_options(self):
         pass
 
     def display_winners(self):

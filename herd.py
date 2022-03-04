@@ -1,5 +1,4 @@
 from dinosaur import Dinosaur
-name_of_dinosaurs = ['T-rex', 'Velociraptor', 'Spinosaurus']
 
 class Herd:
     def __init__(self):

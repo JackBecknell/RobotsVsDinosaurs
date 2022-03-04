@@ -1,6 +1,4 @@
 from robot import Robot
-names_of_robots = ['The Terminator','Robo Cop','Optimus Prime']
-
 
 class Fleet:
     def __init__(self):

@@ -1,8 +1,6 @@
 from random import randint
 from fleet import Fleet
-from fleet import names_of_robots
 from herd import Herd
-from herd import name_of_dinosaurs
 
 class Battlefield:
     def __init__(self):
@@ -24,7 +22,7 @@ class Battlefield:
             self.dino_turn()
 
     def display_welcome(self):
-        print(f"Welcome Player! Quite the matchup Dinosaurs and Robots.\n\nOn our Robots side we have {names_of_robots[0]}!  {names_of_robots[1]}! And {names_of_robots[2]}!\n\nAnd in the other corner we have the {name_of_dinosaurs[0]}!, the {name_of_dinosaurs[1]}!, and {name_of_dinosaurs[2]}!\n\nNow for the rules! Each Robot will choose 1 weapon to use all the way through the match.\nWhile the Dinosaurs can switch it up each time.\n\nLet's get started by giving our robots some weapons!")
+        print(f"Welcome Player! Quite the matchup Dinosaurs and Robots.\n\nOn our Robots side we have {self.fleet_on_battlefield.robots_in_fleet[0].robo_name}!  {self.fleet_on_battlefield.robots_in_fleet[1].robo_name}! And {self.fleet_on_battlefield.robots_in_fleet[2].robo_name}!\n\nAnd in the other corner we have the {self.herd_on_battlefield.dinosaurs_in_herd[0].dino_name}!, the {self.herd_on_battlefield.dinosaurs_in_herd[1].dino_name}!, and {self.herd_on_battlefield.dinosaurs_in_herd[2].dino_name}!\n\nNow for the rules! Each Robot will choose 1 weapon to use all the way through the match.\nWhile the Dinosaurs can switch it up each time.\n\nLet's get started by giving our robots some weapons!")
 
     def battle(self):
         pass

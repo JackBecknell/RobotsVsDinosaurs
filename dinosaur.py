@@ -1,5 +1,5 @@
 #FOR BONUS 2. This will be used to let the user choose an attack for their dinosaur to use.
-dinosaur_attack_choices = [('Ad hominem', -1), ('Dino-sit', -10), ('Stomp', -15), ('Slash', -20), ('Bite', -25), ('Let Godzilla work!', -100)]
+dinosaur_attack_choices = [('Ad hominem', -1), ('Dino-sit', -10), ('Stomp', -20), ('Slash', -30), ('Bite', -40), ('Let Godzilla work!', -100)]
 
 
 class Dinosaur:

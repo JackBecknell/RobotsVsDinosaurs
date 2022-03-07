@@ -21,6 +21,8 @@ class Battlefield:
         print('One more thing, the turns in this game are randomized every time. A coin toss will dictate who gets to strike next!')
         while len(self.herd_on_battlefield.dinosaurs_in_herd) != 0 and len(self.fleet_on_battlefield.robots_in_fleet) != 0:
             self.coin_toss = randint(1,2)
+            self.energy_check()
+            self.check_health()
             if self.coin_toss == 1:
                 self.coin_toss = 'Robots!'
             elif self.coin_toss == 2:
@@ -30,7 +32,7 @@ class Battlefield:
                 self.robo_turn()
             else:
                 self.dino_turn()
-        self.display_winners()
+        print('Thanks for playing.')
 
 #Master function for the dinosaurs turn that runs through all required functions before another coin toss.
     def dino_turn(self):
@@ -39,7 +41,9 @@ class Battlefield:
         self.fleet_on_battlefield.robots_in_fleet[0].robo_health += self.attack_chosen[1]
         self.user_chooses_dino_for_turn.dino_energy_level -= 10
         self.battle(self.user_chooses_dino_for_turn , self.user_chooses_dino_for_turn.dino_name, self.attack_chosen,self.fleet_on_battlefield.robots_in_fleet[0].robo_name)
+        self.energy_check()
         self.check_health()
+        self.display_winners()
 
 #Master function for the robots turn that runs through all require functions before another coin toss.
     def robo_turn(self):
@@ -47,7 +51,9 @@ class Battlefield:
         self.herd_on_battlefield.dinosaurs_in_herd[0].dino_health += self.user_chosen_robot.weapon_chosen[1]
         self.user_chosen_robot.robo_energy_level -= 10
         self.battle(self.user_chosen_robot , self.user_chosen_robot.robo_name, self.user_chosen_robot.weapon_chosen, self.herd_on_battlefield.dinosaurs_in_herd[0].dino_name)
+        self.energy_check()
         self.check_health()
+        self.display_winners()
 
 #Prints to the console relavent battle info for the users enjoyment.
     def battle(self,pass_full_attacking_robo_dino, pass_name_dino_or_robot_attacking, pass_weapon_or_attack, pass_dino_or_robot_being_attacked):
@@ -60,14 +66,37 @@ class Battlefield:
         elif pass_full_attacking_robo_dino in self.fleet_on_battlefield.robots_in_fleet:
             print(f"{self.line_break}{pass_name_dino_or_robot_attacking} just used {pass_weapon_or_attack[0]} against {pass_dino_or_robot_being_attacked} for {pass_weapon_or_attack[1]} health!!")
 
-#Gets called after every turn to check if health is above 0. If not that player <= 0 health gets deleted and a message prints to the console.
+#Gets called after every turn to check if health is above 0. If not that player gets deleted and a message prints to the console.
     def check_health(self):
-        if self.herd_on_battlefield.dinosaurs_in_herd[0].dino_health <= 0:
+        if len(self.fleet_on_battlefield.robots_in_fleet) == 0 or len(self.herd_on_battlefield.dinosaurs_in_herd) == 0:
+            self.display_winners()
+        elif self.herd_on_battlefield.dinosaurs_in_herd[0].dino_health <= 0:
             print(f"{self.line_break}LOOK AT THAT BLOOD! {self.herd_on_battlefield.dinosaurs_in_herd[0].dino_name} definitely isn't getting up again.")
             del self.herd_on_battlefield.dinosaurs_in_herd[0]
         elif self.fleet_on_battlefield.robots_in_fleet[0].robo_health <= 0:
             print(f"{self.line_break}What a hit {self.fleet_on_battlefield.robots_in_fleet[0].robo_name} Is down for the count!")
             del self.fleet_on_battlefield.robots_in_fleet[0]
+
+#Gets called fter every turn to check if energy level is above 0. If not that player gets deleted and a message prints to the console.
+    def energy_check(self):
+        if self.herd_on_battlefield.dinosaurs_in_herd[0].dino_energy_level <= 0:
+            print(f"{self.line_break}{self.herd_on_battlefield.dinosaurs_in_herd[0].dino_name} passes out from exhaustion")
+            self.herd_on_battlefield.dinosaurs_in_herd[0].dino_health = 0
+        elif len(self.herd_on_battlefield.dinosaurs_in_herd) == 2 and self.herd_on_battlefield.dinosaurs_in_herd[1].dino_energy_level <= 0:
+            print(f"{self.line_break}{self.herd_on_battlefield.dinosaurs_in_herd[1].dino_name} passes out from exhaustion")
+            self.herd_on_battlefield.dinosaurs_in_herd[1].dino_health = 0
+        elif len(self.herd_on_battlefield.dinosaurs_in_herd) == 3 and self.herd_on_battlefield.dinosaurs_in_herd[2].dino_energy_level <= 0:
+            print(f"{self.line_break}{self.herd_on_battlefield.dinosaurs_in_herd[2].dino_name} passes out from exhaustion")
+            self.herd_on_battlefield.dinosaurs_in_herd[2].dino_health = 0
+        elif self.fleet_on_battlefield.robots_in_fleet[0].robo_energy_level <= 0:
+            print(f"{self.line_break}{self.fleet_on_battlefield.robots_in_fleet[0].robo_name} passes out from exhaustion")
+            self.fleet_on_battlefield.robots_in_fleet[0].robo_health = 0
+        elif len(self.fleet_on_battlefield.robots_in_fleet) == 2 and self.fleet_on_battlefield.robots_in_fleet[1].robo_energy_level <= 0:
+            print(f"{self.line_break}{self.fleet_on_battlefield.robots_in_fleet[1].robo_name} passes out from exhaustion")
+            self.fleet_on_battlefield.robots_in_fleet[1].robo_health = 0
+        elif len(self.fleet_on_battlefield.robots_in_fleet) == 3 and self.fleet_on_battlefield.robots_in_fleet[2].robo_energy_level <= 0:
+            print(f"{self.line_break}{self.fleet_on_battlefield.robots_in_fleet[2].robo_name} passes out from exhaustion")
+            self.fleet_on_battlefield.robots_in_fleet[2].robo_health = 0
 
 #Evaluates how many dinosaurs are left and allows the user to choose from them.
     def user_chooses_dino_attacker(self):
@@ -162,3 +191,5 @@ class Battlefield:
             print("GAME OVER!\nDINOSAURS RULE AGAIN!")
         elif len(self.herd_on_battlefield.dinosaurs_in_herd) == 0:
             print("GAME OVER!\nTHE ROBOT'S ESTABLISH DOMINANCE!")
+
+
